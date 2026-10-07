@@ -1,0 +1,4 @@
+#!/bin/bash
+# macOS: server runs from the local build; eager-load flags are passed on
+# the command line by ./start.
+exit 0

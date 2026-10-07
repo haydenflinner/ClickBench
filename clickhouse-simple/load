@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+clickhouse-client < create.sql
+
+UF=/Users/wow/code/ClickHouse/tmp/clickbench-server/user_files
+for f in hits_*.native; do
+    ln -sf "$(greadlink -f "$f")" "$UF/$f"
+done
+
+clickhouse-client --query "INSERT INTO hits SELECT * FROM file('hits_*.native', 'Native')" --max-insert-threads $(( $(sysctl -n hw.ncpu) / 4 ))
+
+rm -f "$UF"/hits_*.native
+sync
+clickhouse-client --query "SELECT 'after_load', count() AS parts, max(lvl) AS max_level, sum(r) AS total_rows, groupArray((lvl, toUInt32(r/1e3))) AS level_krows FROM (SELECT level AS lvl, rows AS r FROM system.parts WHERE database='default' AND table='hits' AND active ORDER BY level DESC, rows DESC)" >> ../$(basename "$PWD").stats.log

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/opt/local/bin/bash
 
 # Shared ClickBench driver.
 #
@@ -131,8 +131,11 @@ bench_wait_stopped() {
 
 bench_flush_caches() {
     sync
-    echo 3 | sudo tee /proc/sys/vm/drop_caches >/dev/null
-    # Per-system hook for caches the kernel can't drop.
+    if [ -e /proc/sys/vm/drop_caches ]; then
+        echo 3 | sudo tee /proc/sys/vm/drop_caches >/dev/null
+    fi
+    # Per-system hook for caches the kernel can't drop (on macOS this is
+    # where `purge` runs — there is no /proc/sys/vm/drop_caches).
     if [ -x ./flush-caches ]; then
         ./flush-caches >/dev/null 2>&1 || true
     fi

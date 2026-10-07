@@ -1,0 +1,27 @@
+load_seconds 70
+== final active parts
+parts	max(level)	sum(rows)	formatReadableSize(sum(bytes_on_disk))
+19	1	99997497	8.86 GiB
+== part_log by event
+event_type	n	rows	bytes	raw_bytes	dur_s	max_merge_width
+NewPart	291	99997497	14.27 GiB	15326335901	178.2	0
+MergeParts	14	98298082	8.64 GiB	9278019267	456.9	21
+MergePartsStart	14	0	0.00 B	0	0	21
+== write amplification (bytes written by inserts+merges / bytes inserted)
+1.605
+== merges by result part
+part_name	width	sz	s	event_time
+all_1_21_1	21	625.62 MiB	37.1	2026-10-07 12:14:00
+all_22_42_1	21	698.51 MiB	41.6	2026-10-07 12:14:08
+all_43_63_1	21	618.46 MiB	38.6	2026-10-07 12:14:09
+all_64_84_1	21	675.90 MiB	40.3	2026-10-07 12:14:16
+all_85_105_1	21	582.47 MiB	36.6	2026-10-07 12:14:18
+all_106_126_1	21	625.18 MiB	41.8	2026-10-07 12:14:28
+all_127_147_1	21	688.81 MiB	41.1	2026-10-07 12:14:31
+all_148_168_1	21	640.87 MiB	38	2026-10-07 12:14:34
+all_169_189_1	21	735.53 MiB	35.4	2026-10-07 12:14:38
+all_190_210_1	21	709.93 MiB	29.5	2026-10-07 12:14:40
+all_211_231_1	21	609.37 MiB	25.1	2026-10-07 12:14:40
+all_232_252_1	21	601.12 MiB	22.8	2026-10-07 12:14:42
+all_253_273_1	21	643.12 MiB	19.2	2026-10-07 12:14:43
+all_274_286_1	13	393.33 MiB	9.8	2026-10-07 12:14:53

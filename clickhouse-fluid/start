@@ -1,0 +1,10 @@
+#!/bin/bash
+SERVER_DIR=/Users/wow/code/ClickHouse/tmp/clickbench-server
+BIN=/Users/wow/code/ClickHouse/build/programs/clickhouse
+PIDFILE=$SERVER_DIR/clickbench.pid
+if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+    exit 0
+fi
+cd "$SERVER_DIR"
+nohup "$BIN" server --config-file "$SERVER_DIR/config.xml" >> "$SERVER_DIR/server.out" 2>&1 &
+echo $! > "$PIDFILE"
